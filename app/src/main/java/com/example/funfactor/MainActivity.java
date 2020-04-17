@@ -123,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
             Button b = (Button) findViewById(getResources().getIdentifier(bid, "id", getPackageName()));
             b.setVisibility(View.INVISIBLE);
         }
-        score=0;
         TextView t = (TextView) findViewById(R.id.textView);
         t.setVisibility(View.INVISIBLE);
         counttime.setVisibility(View.INVISIBLE);
