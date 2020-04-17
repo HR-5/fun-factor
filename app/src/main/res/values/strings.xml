@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Fun factor</string>
+    <string name="Edit">Enter the Number</string>
+    <string name="Factor">Choose the Correct Factor</string>
+    <string name="iii">III</string>
+    <string name="ii">II</string>
+    <string name="i">I</string>
+    <string name="go">Go</string>
+    <string name="fun_factor">FUN FACTOR</string>
+    <string name="current_score_0">Current Score:0</string>
+    <string name="best_score">Best Score:0</string>
+</resources>
