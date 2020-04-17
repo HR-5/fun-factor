@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mainlayout"
     android:layout_width="match_parent"
@@ -16,15 +17,17 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="63dp"
-        android:layout_marginLeft="63dp"
-        android:layout_marginTop="100dp"
-        android:hint="@string/Edit"
+        android:layout_marginTop="52dp"
         android:autofillHints="@string/Edit"
         android:ems="10"
         android:gravity="center"
+        android:hint="@string/Edit"
         android:inputType="number"
         android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.292"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appname"
         tools:ignore="LabelFor,RelativeOverlap" />
 
     <Button
@@ -34,14 +37,19 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="37dp"
+        android:layout_marginRight="37dp"
+        android:onClick="findAnswer"
         android:text="@string/i"
         android:textSize="20sp"
-        tools:ignore="RelativeOverlap"
-        android:onClick="findAnswer"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/op3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="RelativeOverlap" />
 
     <Button
         android:id="@+id/op2"
@@ -49,12 +57,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="400dp"
-        android:textSize="20sp"
-        android:text="@string/ii"
-        tools:ignore="RelativeOverlap"
+        android:layout_marginStart="34dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
         android:onClick="findAnswer"
-        android:visibility="invisible" />
+        android:text="@string/ii"
+        android:textSize="20sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/op3"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="RelativeOverlap" />
 
     <Button
         android:id="@+id/op3"
@@ -63,28 +79,38 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="400dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
+        android:layout_marginTop="20dp"
+        android:onClick="findAnswer"
         android:text="@string/iii"
         android:textSize="20sp"
-        tools:ignore="RelativeOverlap"
-        android:onClick="findAnswer"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="RelativeOverlap" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="273dp"
-        android:layout_height="79dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="303dp"
+        android:layout_marginStart="69dp"
+        android:layout_marginLeft="69dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginEnd="69dp"
+        android:layout_marginRight="69dp"
         android:gravity="center"
         android:text="@string/Factor"
         android:textColor="@color/sc"
         android:textSize="25sp"
         android:textStyle="bold"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.782"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/go"
@@ -93,25 +119,32 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="98dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginRight="39dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginRight="64dp"
         android:onClick="dispOptions"
         android:text="@string/go"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/appname"
         tools:ignore="RelativeOverlap" />
 
     <TextView
         android:id="@+id/disp"
-        android:layout_width="268dp"
-        android:layout_height="132dp"
+        android:layout_width="346dp"
+        android:layout_height="159dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="279dp"
+        android:layout_marginTop="300dp"
         android:gravity="center"
         android:text=""
         android:textColor="@color/colorPrimary"
         android:textSize="25sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/appname"
@@ -119,12 +152,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/fun_factor"
+        android:textColor="@color/fun"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="@color/fun"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/score"
@@ -133,14 +169,20 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="34dp"
-        android:layout_marginLeft="34dp"
-        android:layout_marginTop="186dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginLeft="51dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="47dp"
+        android:layout_marginRight="47dp"
         android:gravity="center"
         android:text="@string/current_score_0"
         android:textColor="@color/sc"
         android:textSize="22sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/bscore"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
 
     <TextView
         android:id="@+id/bscore"
@@ -149,14 +191,19 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="186dp"
-        android:layout_marginEnd="53dp"
-        android:layout_marginRight="53dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginLeft="47dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="51dp"
+        android:layout_marginRight="51dp"
         android:gravity="center"
         android:text="@string/best_score"
         android:textColor="@color/sc"
         android:textSize="22sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/score"
+        app:layout_constraintTop_toBottomOf="@+id/editText"
         tools:ignore="RelativeOverlap" />
 
     <TextView
@@ -166,10 +213,11 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="272dp"
-        android:layout_marginEnd="19dp"
-        android:layout_marginRight="19dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/sc"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/sc" />
-</RelativeLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bscore" />
+</androidx.constraintlayout.widget.ConstraintLayout>

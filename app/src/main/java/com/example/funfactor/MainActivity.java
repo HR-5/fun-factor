@@ -1,6 +1,7 @@
 package com.example.funfactor;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -13,7 +14,6 @@ import android.os.Vibrator;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.CountDownTimer;
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     TextView bsc;
     TextView sc;
     TextView disp;
-    RelativeLayout rl;
+    ConstraintLayout rl;
     ArrayList<Integer> no;
     int ans;
     int score;
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         }
         mButton = findViewById(R.id.go);
         mEdit = findViewById(R.id.editText);
-        rl = (RelativeLayout) findViewById(R.id.mainlayout);
+        rl = (ConstraintLayout) findViewById(R.id.mainlayout);
         rl.setBackgroundColor(getResources().getColor(bcolor));
 
         SharedPreferences prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
@@ -88,7 +88,20 @@ public class MainActivity extends AppCompatActivity {
                 counttime.setText("Time left: 0");
                 disp = (TextView) findViewById(R.id.disp);
                 str = "Timeout! \nCorrect answer: " + ans + "\nYour Score: " + score;
+                if (bscore < score) {
+                    share();
+                }
                 disp.setText(str);
+                score = 0;
+                dscore = "Current Score: ".concat(Integer.toString(score));
+                sc.setText(dscore);
+                bcolor = R.color.customRed;
+                rl = (ConstraintLayout) findViewById(R.id.mainlayout);
+                rl.setBackgroundColor(getResources().getColor(bcolor));
+                vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                if (Build.VERSION.SDK_INT >= 26) {
+                    vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+                }
             }
         };
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -110,10 +123,24 @@ public class MainActivity extends AppCompatActivity {
             Button b = (Button) findViewById(getResources().getIdentifier(bid, "id", getPackageName()));
             b.setVisibility(View.INVISIBLE);
         }
+        score=0;
         TextView t = (TextView) findViewById(R.id.textView);
         t.setVisibility(View.INVISIBLE);
+        counttime.setVisibility(View.INVISIBLE);
         mEdit= (EditText) findViewById(R.id.editText);
         mEdit.setText(null);
+
+    }
+
+    public void share(){
+        if (bscore < score) {
+            SharedPreferences prefs = this.getSharedPreferences("myPrefsKey", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("key", score);
+            editor.apply();
+            bsc.setText("Best Score: ".concat(Integer.toString(score)));
+            str = str + "\n Congratulations! You have achieved new Best Score!";
+        }
     }
 
     public void errorDisp(String msg) {
@@ -132,13 +159,11 @@ public class MainActivity extends AppCompatActivity {
 
         if (num < 6) errorDisp("Enter a number greater than 5");
         else {
-            final TextView counttime = findViewById(R.id.time);
-            counttime.setVisibility(View.VISIBLE);
-
-            timer.start();
-
             ans = find_nos();
             if (ans != 0) {
+                final TextView counttime = findViewById(R.id.time);
+                counttime.setVisibility(View.VISIBLE);
+                timer.start();
                 for (int i = 0; i < 3; i++) {
                     String bid = "op".concat(Integer.toString(i + 1));
                     Button b = (Button) findViewById(getResources().getIdentifier(bid, "id", getPackageName()));
@@ -163,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
 
         disp = (TextView) findViewById(R.id.disp);
         sc = (TextView) findViewById(R.id.score);
-        rl = (RelativeLayout) findViewById(R.id.mainlayout);
+        rl = (ConstraintLayout) findViewById(R.id.mainlayout);
 
         if (bnum == ans) {
             str = "Correct Answer :)";
@@ -173,14 +198,12 @@ public class MainActivity extends AppCompatActivity {
             sc.setText(dscore);
             bcolor = R.color.customGreen;
 
+
             rl.setBackgroundColor(getResources().getColor(bcolor));
-
-
-
         }
         else {
             str = "Wrong Answer :(\nCorrect answer: " + ans + "\nYour Score: " + score;
-            disp.setText(str);
+            vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
             if (Build.VERSION.SDK_INT >= 26) {
                 vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
             }
@@ -192,9 +215,12 @@ public class MainActivity extends AppCompatActivity {
                 editor.putInt("key", score);
                 editor.apply();
                 bsc.setText("Best Score: ".concat(Integer.toString(score)));
+                str = str + "\n Congratulations! You have achieved new Best Score!";
             }
+            disp.setText(str);
             score = 0;
-            sc.setText("Current Score: ".concat(Integer.toString(score)));
+            dscore = "Current Score: ".concat(Integer.toString(score));
+            sc.setText(dscore);
 
         }
     }
