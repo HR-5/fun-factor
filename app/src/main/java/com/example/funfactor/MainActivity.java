@@ -21,11 +21,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-import static android.os.VibrationEffect.*;
+//import static android.os.VibrationEffect.*;
 
 
 public class MainActivity extends AppCompatActivity {
     public int num;
+    public int flag;
     Button mButton;
     EditText mEdit;
     TextView bsc;
@@ -37,28 +38,92 @@ public class MainActivity extends AppCompatActivity {
     int score;
     int bscore;
     CountDownTimer timer;
+    CountDownTimer timer2;
     TextView counttime;
     String dscore;
     String time;
     String str;
     int bcolor;
     Vibrator vibrator;
+    long fin;
+
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        flag = 0;
+        fin = 11000;
         dscore = "Current Score:0";
         bcolor = R.color.back;
-
         str = " ";
         if (savedInstanceState != null) {
+            setContentView(R.layout.activity_main);
+            final long[] millisInFuture = {0};
             score = savedInstanceState.getInt("score");
             dscore = savedInstanceState.getString("dscore");
-
             str = savedInstanceState.getString("disp");
             bcolor = savedInstanceState.getInt("bcolor");
+            flag = savedInstanceState.getInt("flag");
+            time = savedInstanceState.getString("time");
+            no = savedInstanceState.getIntegerArrayList("no");
+            ans = savedInstanceState.getInt("ans");
+            millisInFuture[0] = savedInstanceState.getLong("fin");
+            millisInFuture[0] = millisInFuture[0] - 1000;
+            if (flag == 1) {
+                if (millisInFuture[0] != 0) {
+                    timer2 = new CountDownTimer(millisInFuture[0], 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            if (flag != 1) timer2.cancel();
+                            time = "Time left: " + millisUntilFinished / 1000;
+                            counttime.setText(time);
+                            fin = millisUntilFinished;
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            resetOptions();
+                            flag = 3;
+                            errorDisp("t2");
+                            counttime.setText("Time left: 0");
+                            disp = (TextView) findViewById(R.id.disp);
+                            str = "Timeout! \nCorrect answer: " + ans + "\nYour Score: " + score;
+                            if (bscore < score) {
+                                share();
+                            }
+                            disp.setText(str);
+                            score = 0;
+                            dscore = "Current Score: ".concat(Integer.toString(score));
+                            sc.setText(dscore);
+                            bcolor = R.color.customRed;
+                            rl = (ConstraintLayout) findViewById(R.id.mainlayout);
+                            rl.setBackgroundColor(getResources().getColor(bcolor));
+                            millisInFuture[0] = 0;
+                            vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                            if (Build.VERSION.SDK_INT >= 26) {
+                                assert vibrator != null;
+                                vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+                            }
+                        }
+                    }.start();
+
+
+                    final TextView counttime = findViewById(R.id.time);
+                    counttime.setVisibility(View.VISIBLE);
+                    counttime.setText(time);
+                    TextView t = (TextView) findViewById(R.id.textView);
+                    t.setVisibility(View.VISIBLE);
+                    for (int i = 0; i < 3; i++) {
+                        String bid = "op".concat(Integer.toString(i + 1));
+                        Button b = (Button) findViewById(getResources().getIdentifier(bid, "id", getPackageName()));
+                        b.setText(Integer.toString(no.get(i)));
+                        b.setVisibility(View.VISIBLE);
+                    }
+
+                }
+            }
 
         }
         mButton = findViewById(R.id.go);
@@ -76,36 +141,44 @@ public class MainActivity extends AppCompatActivity {
         sc.setText(dscore);
         bsc.setText("Best Score: ".concat(Integer.toString(bscore)));
         counttime = findViewById(R.id.time);
-        timer = new CountDownTimer(11000,1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                time = "Time left: " + millisUntilFinished/1000;
-                counttime.setText(time);
-            }
-            @Override
-            public void onFinish() {
-                resetOptions();
-                counttime.setText("Time left: 0");
-                disp = (TextView) findViewById(R.id.disp);
-                str = "Timeout! \nCorrect answer: " + ans + "\nYour Score: " + score;
-                if (bscore < score) {
-                    share();
+
+            timer = new CountDownTimer(11000, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    if (flag == 3) timer.cancel();
+                    time = "Time left: " + millisUntilFinished / 1000;
+                    counttime.setText(time);
+                    fin = millisUntilFinished;
                 }
-                disp.setText(str);
-                score = 0;
-                dscore = "Current Score: ".concat(Integer.toString(score));
-                sc.setText(dscore);
-                bcolor = R.color.customRed;
-                rl = (ConstraintLayout) findViewById(R.id.mainlayout);
-                rl.setBackgroundColor(getResources().getColor(bcolor));
-                vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-                if (Build.VERSION.SDK_INT >= 26) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+
+                @Override
+                public void onFinish() {
+                    resetOptions();
+                    flag=3;
+                    errorDisp("t1");
+                    counttime.setText("Time left: 0");
+                    disp = (TextView) findViewById(R.id.disp);
+                    str = "Timeout! \nCorrect answer: " + ans + "\nYour Score: " + score;
+                    if (bscore < score) {
+                        share();
+                    }
+                    disp.setText(str);
+                    score = 0;
+                    dscore = "Current Score: ".concat(Integer.toString(score));
+                    sc.setText(dscore);
+                    bcolor = R.color.customRed;
+                    rl = (ConstraintLayout) findViewById(R.id.mainlayout);
+                    rl.setBackgroundColor(getResources().getColor(bcolor));
+                    vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                    if (Build.VERSION.SDK_INT >= 26) {
+                        assert vibrator != null;
+                        vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+                    }
                 }
-            }
-        };
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+            };
+
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -113,7 +186,16 @@ public class MainActivity extends AppCompatActivity {
         outState.putString("dscore", String.valueOf(dscore));
         outState.putString("disp", String.valueOf(str));
         outState.putInt("bcolor",bcolor);
+        outState.putInt("flag",flag);
+        outState.putString("time",time);
+        outState.putLong("fin",fin);
+        outState.putIntegerArrayList("no",no);
+        outState.putInt("ans",ans);
+        if(fin!=0)
+        timer.cancel();
     }
+
+
 
 
 
@@ -149,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void dispOptions(View view) {
+
         disp = (TextView) findViewById(R.id.disp);
         str =" ";
         disp.setText(str);
@@ -160,9 +243,10 @@ public class MainActivity extends AppCompatActivity {
         else {
             ans = find_nos();
             if (ans != 0) {
+                flag=1;
                 final TextView counttime = findViewById(R.id.time);
                 counttime.setVisibility(View.VISIBLE);
-                timer.start();
+                int orientation = getResources().getConfiguration().orientation;
                 for (int i = 0; i < 3; i++) {
                     String bid = "op".concat(Integer.toString(i + 1));
                     Button b = (Button) findViewById(getResources().getIdentifier(bid, "id", getPackageName()));
@@ -170,7 +254,11 @@ public class MainActivity extends AppCompatActivity {
                     b.setVisibility(View.VISIBLE);
                 }
                 TextView t = (TextView) findViewById(R.id.textView);
-                t.setVisibility(View.VISIBLE);
+                if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    t.setVisibility(View.VISIBLE);
+                } else {
+                    t.setVisibility(View.VISIBLE);
+                }
             }
 
 
@@ -179,10 +267,11 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public void findAnswer(View view) {
+        timer.cancel();
+        flag=2;
         Button b = (Button) view;
         String text = b.getText().toString();
         int bnum = Integer.parseInt(text);
-        timer.cancel();
         resetOptions();
 
         disp = (TextView) findViewById(R.id.disp);
@@ -204,6 +293,7 @@ public class MainActivity extends AppCompatActivity {
             str = "Wrong Answer :(\nCorrect answer: " + ans + "\nYour Score: " + score;
             vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
             if (Build.VERSION.SDK_INT >= 26) {
+                assert vibrator != null;
                 vibrator.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
             }
             bcolor = R.color.customRed;
@@ -215,6 +305,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.apply();
                 bsc.setText("Best Score: ".concat(Integer.toString(score)));
                 str = str + "\n Congratulations! You have achieved new Best Score!";
+                bscore = score;
             }
             disp.setText(str);
             score = 0;

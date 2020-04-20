@@ -30,7 +30,7 @@
         tools:ignore="LabelFor,RelativeOverlap" />
 
     <Button
-        android:id="@+id/op1"
+        android:id="@+id/op3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -42,16 +42,16 @@
         android:layout_marginEnd="66dp"
         android:layout_marginRight="66dp"
         android:onClick="findAnswer"
-        android:text="@string/i"
+        android:text="@string/iii"
         android:textSize="20sp"
         android:visibility="invisible"
-        app:layout_constraintEnd_toStartOf="@+id/op3"
+        app:layout_constraintEnd_toStartOf="@+id/op1"
         app:layout_constraintStart_toEndOf="@+id/op2"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:ignore="RelativeOverlap" />
 
     <Button
-        android:id="@+id/op2"
+        android:id="@+id/op1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -60,7 +60,7 @@
         android:layout_marginLeft="139dp"
         android:layout_marginTop="10dp"
         android:onClick="findAnswer"
-        android:text="@string/ii"
+        android:text="@string/i"
         android:textSize="20sp"
         android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
         tools:ignore="RelativeOverlap" />
 
     <Button
-        android:id="@+id/op3"
+        android:id="@+id/op2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -78,7 +78,7 @@
         android:layout_marginEnd="139dp"
         android:layout_marginRight="139dp"
         android:onClick="findAnswer"
-        android:text="@string/iii"
+        android:text="@string/ii"
         android:textSize="20sp"
         android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
